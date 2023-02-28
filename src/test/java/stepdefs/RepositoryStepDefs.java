@@ -99,7 +99,7 @@ public class RepositoryStepDefs extends BaseCucumberTest {
         fileUploadingPage.getCommitChangesElement().click();
     }
 
-    @When("repository with extremely long name is attempted to create")
+    @When("repository with extremely long description is attempted to create")
     public void attemptToCreateRepositoryWithExtremelyLongDescription() {
         Repository repository = Repository.builder()
                 .name("RepositoryLong01")
@@ -116,7 +116,7 @@ public class RepositoryStepDefs extends BaseCucumberTest {
                 .click();
     }
 
-    @Then("input check message about extremely long repository name is shown")
+    @Then("input check message about extremely long repository description is shown")
     public void showErrorMessageAboutExtremelyLongRepositoryDescription() {
         waitsService.waitForElementVisible(repositoryCreationPage.getRepositoryCreationErrorMessageElement());
     }

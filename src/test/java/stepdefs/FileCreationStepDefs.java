@@ -4,10 +4,8 @@ import baseentities.BaseCucumberTest;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.testng.Assert;
 import pages.repository.RepositoryPage;
 import pages.repository.fileoperations.FileCreationPage;
-import pages.repository.fileoperations.FileDeletionPage;
 
 import java.util.List;
 

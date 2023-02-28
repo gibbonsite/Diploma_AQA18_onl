@@ -29,8 +29,9 @@ public class Hook extends BaseCucumberTest {
                 case "Repository creation":
                     deleteRepository("AnotherRepository");
                     break;
-                case "Create repository using name of minimal available length":
+                case "Boundary test for repository creation":
                     deleteRepository("A");
+                    deleteRepository("A3A5A7A9A12A15A18A21A24A27A30A33A36A39A42A45A48A51A54A57A60A63A66A69A72A75A78A81A84A87A90A93A96A100A");
                     break;
                 case "Repository deletion":
                     DashboardPage dashboardPage = new DashboardPage(driver);
@@ -64,6 +65,10 @@ public class Hook extends BaseCucumberTest {
     private void deleteRepository(String repository) {
         RepositoryPage repositoryPage = new RepositoryPage(driver);
         repositoryPage.openPageByUrl("/DiplomaAqa18Onl/" + repository);
+        if (driver.getTitle().contains("Page not found")) {
+            return;  // repository does not exist -- skip deletion
+        }
+
         repositoryPage.getRepositorySettingsElement().click();
         RepositorySettingsPage repositorySettingsPage = new RepositorySettingsPage(driver);
         repositorySettingsPage.getRepositoryDeletionElement().click();
