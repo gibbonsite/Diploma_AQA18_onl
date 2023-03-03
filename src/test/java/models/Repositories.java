@@ -1,22 +1,23 @@
 package models;
 
 
+import com.google.gson.annotations.SerializedName;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import com.google.gson.annotations.Expose;
-import lombok.*;
 
-@Getter
-@Setter
 @Builder
-@EqualsAndHashCode
+@Data
 @ToString
+@EqualsAndHashCode
 public class Repositories {
-    @Expose
+    @EqualsAndHashCode.Exclude
+    private int id;
     private String name;
-    @Expose
     private String announcement;
-    @Expose
-    private boolean isPrivate;
-    private String owner;
-    private String repo;
+    private String description;
+    @SerializedName(value = "private")
+    private boolean IsPrivate;
 }

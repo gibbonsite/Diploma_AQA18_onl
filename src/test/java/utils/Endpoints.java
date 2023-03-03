@@ -9,6 +9,7 @@ public class Endpoints {
     public static final String CREATE_A_FORK = "/repos/{owner}/{repo}/forks";
     public static final String ADD_AN_EMAILS = "/user/emails";
     public static final String DELETE_AN_EMAILS = "/user/emails";
-    public static final String ACCESS_TOKEN = "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";
+    public static final String GET_REPO = "/repos/{owner}/{repo}";
+    public static final String GET_LIST_EMAILS = "/user/emails";
 }
 

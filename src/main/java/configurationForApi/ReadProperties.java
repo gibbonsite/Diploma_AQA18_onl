@@ -1,5 +1,6 @@
 package configurationForApi;
 
+
 import java.io.IOException;
 import java.util.Properties;
 
@@ -15,9 +16,21 @@ public class ReadProperties {
         }
     }
 
-
     public static String username() {
         return properties.getProperty("username");
     }
+    public static String password() {
+        return properties.getProperty("password");
+    }
+    public static String url() {
+        return properties.getProperty("url");
+    }
+    public static String token() {
+        return properties.getProperty("token");
+    }
+    public static String database() {
+        return properties.getProperty("database");
+    }
+
 
 }
