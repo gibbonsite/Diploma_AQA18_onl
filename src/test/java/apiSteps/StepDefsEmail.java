@@ -21,7 +21,6 @@ public class StepDefsEmail {
 
     @When("user post email address for github")
     public void userPostEmailAddressForGithub() {
-        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
         emailAdapter.addEmailToGithub();
     }
 
@@ -32,7 +31,6 @@ public class StepDefsEmail {
 
     @Then("user send get response to github")
     public void userGetResponseFromGithubAboutEmailIsAlreadyAdded() {
-        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
         response = emailAdapter.getEmailsList();
     }
 

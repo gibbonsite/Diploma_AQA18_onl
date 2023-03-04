@@ -21,7 +21,6 @@ public class StepDefsRepository {
 
     @When("user post data to github api")
     public void userPostRepoDataToGithubApi() {
-        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
         repositoryAdapter.createRepository();
     }
     @And("user check code status")
@@ -31,17 +30,16 @@ public class StepDefsRepository {
 
     @When("user get repo data to github api")
     public void userGetRepoDataToGithubApi() {
-        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
-        getRepoResponse = repositoryAdapter.getRepo("Test", "DiplomaAqa18Onl");
+
+        repositoryAdapter.getRepo("Test", "DiplomaAqa18Onl");
     }
     @Then("user get response from github about created repository")
     public void userGetRequestFromGithubAboutCreatedRepository() {
-        Assert.assertEquals(getRepoResponse.statusCode(), 200);
+        repositoryAdapter.checkGetStatus();
     }
 
     @And("Delete repository")
     public void deleteRepository() {
-        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
         Response deleteResponse = repositoryAdapter.deleteRepo();
         Assert.assertEquals(deleteResponse.statusCode(), 204);
     }

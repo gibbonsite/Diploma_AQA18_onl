@@ -21,6 +21,7 @@ public class RepositoryAdapter {
     Logger logger = LogManager.getLogger(RepositoryAdapter.class);
 
     public void createRepository() {
+        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
         logger.info("Creating Repository in GitHub");
         Map<String, Object> repo = new HashMap<>();
         repo.put("name", "Test");
@@ -28,17 +29,18 @@ public class RepositoryAdapter {
         repo.put("private", false);
         response = given()
                 .when()
+                .log().all()
                 .body(repo)
                 .post(AUTHENTICATED_USER_REPO)
                 .then().log().all().extract().response();
     }
     public void checkCreatedStatus(){
-
+    if(response != null)
         assertEquals(response.statusCode(),201);
     }
-    public Response getRepo(String repo, String owner){
-
-        return given()
+    public void getRepo(String repo, String owner){
+        logger.info("Get Repository in GitHub");
+        response = given()
                 .pathParams("owner", ReadProperties.username())
                 .pathParam("repo", "Test")
                 .when()
@@ -48,8 +50,11 @@ public class RepositoryAdapter {
                 .extract()
                 .response();
     }
+    public void checkGetStatus(){
+        assertEquals(response.statusCode(), 200);
+    }
     public Response deleteRepo(){
-
+        logger.info("Delete Repository in GitHub");
         return given()
                 .pathParam("owner", ReadProperties.username())
                 .pathParam("repo", "Test")

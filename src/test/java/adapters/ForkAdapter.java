@@ -14,10 +14,11 @@ import static utils.Endpoints.*;
 
 public class ForkAdapter {
     Response response;
-    Logger logger = LogManager.getLogger(RepositoryAdapter.class);
+    Logger logger = LogManager.getLogger(ForkAdapter.class);
 
     public void createFork() {
-        logger.info("Creating Repository in GitHub");
+        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
+        logger.info("Creating Fork in GitHub");
         Map<String, Object> repo = new HashMap<>();
         repo.put("name", "TestForkAdded");
 
@@ -25,6 +26,7 @@ public class ForkAdapter {
                 .pathParams("owner", ReadProperties.username())
                 .pathParam("repo", "Test_Repo_11231")
                 .when()
+                .log().all()
                 .body(repo)
                 .post(CREATE_A_FORK)
                 .then().log().all().extract().response();

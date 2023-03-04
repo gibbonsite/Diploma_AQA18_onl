@@ -13,8 +13,8 @@ Feature: Regression API Test
     When authorization user want to get emojis information from github
     Then the requested data is returned
 
-  Scenario: Get emojis with wrong access token
-    When authorization user want to get emojis with wrong access token
+  Scenario: Get emojis with double access token
+    When authorization user want to get emojis with double access token
     Then the requester data return error unauthorization error
 
   Scenario: Get wrong endpoint when get user by username

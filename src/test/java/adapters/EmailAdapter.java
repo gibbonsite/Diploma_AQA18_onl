@@ -22,6 +22,7 @@ public class EmailAdapter {
 
         response = given()
                 .when()
+                .log().all()
                 .body(emails)
                 .post(ADD_AN_EMAILS)
                 .then().log().body().extract().response();
@@ -32,9 +33,10 @@ public class EmailAdapter {
     }
 
     public Response getEmailsList() {
-        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
+        logger.info("Get email in GitHub");
         return given()
                 .when()
+                .log().all()
                 .get(GET_LIST_EMAILS)
                 .then()
                 .log().body()
@@ -43,12 +45,13 @@ public class EmailAdapter {
     }
 
     public Response deleteEmail() {
-        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
+        logger.info("Delete email in GitHub");
         String[] emails = new String[1];
         emails[0] = "vshchatsko@gmail.com";
         return given()
                 .body(emails)
                 .when()
+                .log().all()
                 .delete(DELETE_AN_EMAILS)
                 .then()
                 .log().body()
