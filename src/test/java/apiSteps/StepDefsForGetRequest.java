@@ -4,8 +4,10 @@ import adapters.GetRequestsAdapters;
 import adapters.Specification;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.apache.hc.core5.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
+import static org.testng.Assert.assertEquals;
 import static utils.Endpoints.*;
 
 public class StepDefsForGetRequest {
@@ -14,7 +16,6 @@ public class StepDefsForGetRequest {
 
     @When("authorization user want to get information from github")
     public void authorizationUserWantToGetInformationFromGithub() {
-        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
         getRequestsAdapters.authorizationUserWantToGetInformationFromGithub();
     }
 
@@ -28,10 +29,18 @@ public class StepDefsForGetRequest {
         getRequestsAdapters.authorizationUserWantToGetAllInformationFromGithub();
 
     }
+    @Then("the requested data info of all user is returned")
+    public void theRequestedDataInfoOfAllUserIsReturned() {
+        getRequestsAdapters.theRequestedDataAllUserIsReturned();
+    }
 
     @When("authorization user want to get emojis information from github")
     public void authorizationUserWantToGetEmojisInformationFromGithub() {
         getRequestsAdapters.authorizationUserWantToGetEmojisInformationFromGithub();
+    }
+    @Then("the requested data emojis is returned")
+    public void theRequestedDataEmojisIsReturned() {
+        getRequestsAdapters.theRequestedDataOfEmojisIsReturned();
     }
 
     @When("authorization user want to get emojis with double access token")
@@ -47,11 +56,13 @@ public class StepDefsForGetRequest {
     @When("authorization user want to get information from github with wrong endpoint")
     public void authorizationUserWantToGetInformationFromGithubWithWrongEndpoint() {
         getRequestsAdapters.authorizationUserWantToGetInformationFromGithubWithWrongEndpoint();
-
     }
 
     @Then("the requester data return error not found error")
     public void theRequesterDataReturnErrorNotFoundError() {
         getRequestsAdapters.theRequesterDataReturnErrorNotFoundError();
     }
+
+
+
 }

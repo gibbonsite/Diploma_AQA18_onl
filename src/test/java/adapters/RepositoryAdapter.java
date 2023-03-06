@@ -2,10 +2,10 @@ package adapters;
 
 import configurationForApi.ReadProperties;
 import io.restassured.response.Response;
+import org.apache.hc.core5.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-
+import org.testng.Assert;
 
 
 import java.util.HashMap;
@@ -21,24 +21,23 @@ public class RepositoryAdapter {
     Logger logger = LogManager.getLogger(RepositoryAdapter.class);
 
     public void createRepository() {
-        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
         logger.info("Creating Repository in GitHub");
         Map<String, Object> repo = new HashMap<>();
         repo.put("name", "Test");
         repo.put("description", "test1");
         repo.put("private", false);
-        response = given()
+        response =  given()
                 .when()
                 .log().all()
                 .body(repo)
                 .post(AUTHENTICATED_USER_REPO)
                 .then().log().all().extract().response();
     }
-    public void checkCreatedStatus(){
-    if(response != null)
-        assertEquals(response.statusCode(),201);
+    public void checkCreatedStatus() {
+
+        assertEquals(response.statusCode(), HttpStatus.SC_CREATED);
     }
-    public void getRepo(String repo, String owner){
+    public void getRepo(){
         logger.info("Get Repository in GitHub");
         response = given()
                 .pathParams("owner", ReadProperties.username())
@@ -51,7 +50,7 @@ public class RepositoryAdapter {
                 .response();
     }
     public void checkGetStatus(){
-        assertEquals(response.statusCode(), 200);
+        Assert.assertEquals(response.statusCode(), HttpStatus.SC_OK);
     }
     public Response deleteRepo(){
         logger.info("Delete Repository in GitHub");

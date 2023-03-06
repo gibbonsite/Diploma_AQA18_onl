@@ -1,8 +1,10 @@
 package baseEntitites;
 
-
-import com.google.gson.Gson;
+import adapters.EmailAdapter;
+import configurationForApi.DataBaseService;
+import dbTables.EmailDbTable;
 
 public class BaseCucumberTest{
-    protected Gson gson;
+    protected DataBaseService dbService;
+
 }

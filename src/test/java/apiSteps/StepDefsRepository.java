@@ -16,7 +16,6 @@ import static utils.Endpoints.GITHUB;
 
 
 public class StepDefsRepository {
-    private static Response getRepoResponse;
     RepositoryAdapter repositoryAdapter = new RepositoryAdapter();
 
     @When("user post data to github api")
@@ -31,7 +30,7 @@ public class StepDefsRepository {
     @When("user get repo data to github api")
     public void userGetRepoDataToGithubApi() {
 
-        repositoryAdapter.getRepo("Test", "DiplomaAqa18Onl");
+        repositoryAdapter.getRepo();
     }
     @Then("user get response from github about created repository")
     public void userGetRequestFromGithubAboutCreatedRepository() {

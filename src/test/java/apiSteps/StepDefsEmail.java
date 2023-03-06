@@ -1,26 +1,32 @@
 package apiSteps;
 
 import adapters.EmailAdapter;
-import adapters.RepositoryAdapter;
-import adapters.Specification;
-import configurationForApi.ReadProperties;
+
+import baseEntitites.BaseCucumberTest;
+import configurationForApi.DataBaseService;
+import dbTables.EmailDbTable;
 import io.cucumber.java.en.And;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import io.restassured.RestAssured;
-import io.restassured.response.Response;
+import models.Email;
 
-import org.testng.Assert;
+public class StepDefsEmail extends BaseCucumberTest {
+    protected DataBaseService dbService;
+    protected EmailDbTable emailDbTable;
+    protected EmailAdapter emailAdapter;
+    protected BaseCucumberTest baseCucumberTest;
+    protected Email email;
 
-import static utils.Endpoints.GITHUB;
-
-
-public class StepDefsEmail {
-    EmailAdapter emailAdapter = new EmailAdapter();
-    Response response;
-
+    public StepDefsEmail() {
+        this.dbService = new DataBaseService();
+        this.emailDbTable = new EmailDbTable(dbService);
+        this.emailAdapter = new EmailAdapter();
+        this.baseCucumberTest = new BaseCucumberTest();
+    }
     @When("user post email address for github")
     public void userPostEmailAddressForGithub() {
+        emailDbTable.getEmails();
         emailAdapter.addEmailToGithub();
     }
 
@@ -31,16 +37,23 @@ public class StepDefsEmail {
 
     @Then("user send get response to github")
     public void userGetResponseFromGithubAboutEmailIsAlreadyAdded() {
-        response = emailAdapter.getEmailsList();
+        emailAdapter.getEmailsList();
     }
 
     @And("check get status")
     public void checkGetStatus() {
-        Assert.assertEquals(response.statusCode(), 200);
+        emailAdapter.responseGetStatusEmail();
     }
 
     @And("delete added email")
     public void deleteAddedEmail() {
         emailAdapter.deleteEmail();
+    }
+
+
+    @And("Add information for db email")
+    public void addInformationForDbEmail() {
+        emailDbTable.getEmails();
+
     }
 }

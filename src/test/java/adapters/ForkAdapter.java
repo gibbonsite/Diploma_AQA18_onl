@@ -13,8 +13,9 @@ import static org.testng.Assert.assertEquals;
 import static utils.Endpoints.*;
 
 public class ForkAdapter {
-    Response response;
+
     Logger logger = LogManager.getLogger(ForkAdapter.class);
+    Response response;
 
     public void createFork() {
         Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));

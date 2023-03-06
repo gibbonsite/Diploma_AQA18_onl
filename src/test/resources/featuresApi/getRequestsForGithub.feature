@@ -7,11 +7,11 @@ Feature: Regression API Test
 
   Scenario: Data request for all users
     When authorization user want to get all information from github
-    Then the requested data is returned
+    Then the requested data info of all user is returned
 
   Scenario: Data request get emojis
     When authorization user want to get emojis information from github
-    Then the requested data is returned
+    Then the requested data emojis is returned
 
   Scenario: Get emojis with double access token
     When authorization user want to get emojis with double access token

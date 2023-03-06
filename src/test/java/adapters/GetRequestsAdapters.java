@@ -14,13 +14,12 @@ import static io.restassured.RestAssured.given;
 import static utils.Endpoints.*;
 
 public class GetRequestsAdapters {
-    private Response response;
     Logger logger = LogManager.getLogger(GetRequestsAdapters.class);
+    Response response;
 
-    public Response authorizationUserWantToGetInformationFromGithub() {
+    public void authorizationUserWantToGetInformationFromGithub() {
         logger.info("Get user info in GitHub");
-        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
-        return given()
+        response = given()
                 .get((USER_URL + "/" + ReadProperties.username()))
                 .then()
                 .log().body()
@@ -28,7 +27,7 @@ public class GetRequestsAdapters {
     }
 
     public void theRequestedDataIsReturned() {
-        Assert.assertEquals(authorizationUserWantToGetInformationFromGithub().getStatusCode(), HttpStatus.SC_OK);
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
     }
 
     public void authorizationUserWantToGetAllInformationFromGithub() {
@@ -37,9 +36,10 @@ public class GetRequestsAdapters {
                 .get(USER_URL)
                 .then()
                 .log().body().extract().response();
-
     }
-
+    public void theRequestedDataAllUserIsReturned() {
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
+    }
 
     public void authorizationUserWantToGetEmojisInformationFromGithub() {
         logger.info("Get emojis info in GitHub");
@@ -47,6 +47,9 @@ public class GetRequestsAdapters {
                 .get(GET_EMOJIS)
                 .then()
                 .log().body().extract().response();
+    }
+    public void theRequestedDataOfEmojisIsReturned() {
+        Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
     }
 
     public void requestForEmojisWithDoubleToken() {
@@ -62,7 +65,6 @@ public class GetRequestsAdapters {
                 .log().body().extract().response();
     }
 
-
     public void theRequesterDataReturnErrorBadRequest() {
         Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
@@ -70,7 +72,7 @@ public class GetRequestsAdapters {
 
     public void authorizationUserWantToGetInformationFromGithubWithWrongEndpoint() {
         logger.info("Get repo info with wrong url");
-        response = given()
+        response =  given()
                 .get("//repo")
                 .then()
                 .log().body().extract().response();
