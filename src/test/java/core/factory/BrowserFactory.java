@@ -4,6 +4,7 @@ package core.factory;
 import core.configuration.ReadProperties;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
+import lombok.extern.log4j.Log4j2;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,8 +12,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.time.Duration;
 
+@Log4j2
 public class BrowserFactory {
-    private WebDriver driver = null;
+    private WebDriver driver;
 
     public BrowserFactory() {
         switch (ReadProperties.getConfig().browser().toLowerCase()) {
@@ -38,7 +40,7 @@ public class BrowserFactory {
                 driver = new FirefoxDriver();
                 break;
             default:
-                System.out.println("Browser " + ReadProperties.getConfig().browser() + " is not supported.");
+                log.error("Browser " + ReadProperties.getConfig().browser() + " is not supported.");
                 break;
         }
     }

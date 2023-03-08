@@ -8,6 +8,8 @@ import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import lombok.extern.log4j.Log4j2;
 import model.Repository;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import pages.DashboardPage;
 import pages.repository.RepositoryCreationPage;
 import pages.repository.RepositoryDeletionDialogWindow;
@@ -15,8 +17,12 @@ import pages.repository.RepositoryPage;
 import pages.repository.RepositorySettingsPage;
 import pages.repository.fileoperations.FileDeletionPage;
 
+import java.io.ByteArrayInputStream;
+
+import static io.qameta.allure.Allure.addAttachment;
+
 @Log4j2
-public class Hook extends BaseCucumberStepDefs {
+public class CucumberHook extends BaseCucumberStepDefs {
     @Before
     public void initScenario(Scenario scenario) {
         driver = new BrowserFactory().getDriver();
@@ -59,6 +65,7 @@ public class Hook extends BaseCucumberStepDefs {
                     fileDeletionPage.getDeleteFileElement().click();
                     break;
             }
+
             driver.quit();
         }
     }
