@@ -1,7 +1,7 @@
-package factory;
+package core.factory;
 
 
-import configuration.ReadProperties;
+import core.configuration.ReadProperties;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.github.bonigarcia.wdm.config.DriverManagerType;
 import org.openqa.selenium.WebDriver;
@@ -15,13 +15,13 @@ public class BrowserFactory {
     private WebDriver driver = null;
 
     public BrowserFactory() {
-        switch (ReadProperties.browserName().toLowerCase()) {
+        switch (ReadProperties.getConfig().browser().toLowerCase()) {
             case "chrome":
                 DriverManagerType driverManagerType = DriverManagerType.CHROME;
                 WebDriverManager.getInstance(driverManagerType).setup();
 
                 ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.setHeadless(ReadProperties.isHeadless());
+                chromeOptions.setHeadless(ReadProperties.getConfig().headless());
                 chromeOptions.addArguments("--disable-gpu");
                 //chromeOptions.addArguments("--window-size=1920,1200");
                 chromeOptions.addArguments("--ignore-certificate-errors");
@@ -38,7 +38,7 @@ public class BrowserFactory {
                 driver = new FirefoxDriver();
                 break;
             default:
-                System.out.println("Browser " + ReadProperties.browserName() + " is not supported.");
+                System.out.println("Browser " + ReadProperties.getConfig().browser() + " is not supported.");
                 break;
         }
     }

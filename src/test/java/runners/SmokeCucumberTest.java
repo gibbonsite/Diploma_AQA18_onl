@@ -1,14 +1,16 @@
+package runners;
+
 import io.cucumber.testng.AbstractTestNGCucumberTests;
 import io.cucumber.testng.CucumberOptions;
 import org.testng.annotations.DataProvider;
 
 @CucumberOptions(
         features = {"src/test/resources/features"},
-        plugin = {"json:target/cucumber.json", "html:target/site/cucumber-pretty"},
-        glue = "stepdefs",
+        plugin = {"json:target/cucumber.json", "html:target/site/cucumber-pretty.html"},
+        glue = {"stepdefs", "hooks"},
         tags = "@SmokeTest"
 )
-public class RunSmokeCucumberTest extends AbstractTestNGCucumberTests {
+public class SmokeCucumberTest extends AbstractTestNGCucumberTests {
 
     @Override
     @DataProvider

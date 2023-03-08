@@ -1,20 +1,21 @@
 package stepdefs;
 
-import baseentities.BaseCucumberTest;
+import baseentities.BaseCucumberStepDefs;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.By;
 import pages.repository.RepositoryPage;
+import pages.repository.SuggestedListDialogWindow;
 
-public class SuggestedListStepDefs extends BaseCucumberTest {
-    private RepositoryPage.SuggestedListDialogWindow suggestedListDialogWindow;
+public class SuggestedListStepDefs extends BaseCucumberStepDefs {
+    private SuggestedListDialogWindow suggestedListDialogWindow;
 
     @When("incorrect suggested list name is entered")
     public void enterIncorrectSuggestedListName() {
-        RepositoryPage repositoryPage = new RepositoryPage(driver);
+        RepositoryPage repositoryPage = new RepositoryPage();
         repositoryPage.getSuggestedListsDownArrowElement().click();
         repositoryPage.getCreateSuggestedListElement().click();
-        suggestedListDialogWindow = new RepositoryPage.SuggestedListDialogWindow(driver);
+        suggestedListDialogWindow = new SuggestedListDialogWindow();
         suggestedListDialogWindow.getListNameElement().sendKeys("%$#");
     }
 

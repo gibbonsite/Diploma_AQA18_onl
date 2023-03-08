@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class RepositoryPage extends BasePage {
     private final By repositoryHeaderElementLocator = By.cssSelector(
-            "[id='repository-container-header'] strong > a");
+            "#repository-container-header strong > a");
     private final By repositorySettingsElementLocator = By.id("settings-tab");
     private final By addFileElementLocator = By.xpath(
             "//*[contains(@class, 'file-navigation')]//span[contains(text(), 'Add file')]");
@@ -31,10 +31,6 @@ public class RepositoryPage extends BasePage {
 
     private final By createSuggestedListElementLocator = By.xpath(
             "//*[contains(text(), 'Suggested lists')]/ancestor::details-menu//footer/button");
-
-    public RepositoryPage(WebDriver driver) {
-        super(driver);
-    }
 
     public WebElement getRepositoryHeaderElement() {
         return driver.findElement(repositoryHeaderElementLocator);
@@ -77,17 +73,5 @@ public class RepositoryPage extends BasePage {
 
     public WebElement getCreateSuggestedListElement() {
         return driver.findElement(createSuggestedListElementLocator);
-    }
-
-    public static class SuggestedListDialogWindow extends BasePage {
-        private final By listNameElementLocator = By.name("user_list[name]");
-
-        public SuggestedListDialogWindow(WebDriver driver) {
-            super(driver);
-        }
-
-        public WebElement getListNameElement() {
-            return driver.findElement(listNameElementLocator);
-        }
     }
 }

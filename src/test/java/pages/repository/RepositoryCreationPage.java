@@ -15,11 +15,6 @@ public class RepositoryCreationPage extends BasePage {
     private final By createRepositoryElementLocator = By.xpath(
             "//button[contains(text(), 'Create repository')]");
 
-    public RepositoryCreationPage(WebDriver driver) {
-        super(driver);
-    }
-
-
     public WebElement getRepositoryCreationErrorMessageElement() {
         return driver.findElement(repositoryCreationErrorMessageElementLocator);
     }

@@ -8,9 +8,5 @@ import org.openqa.selenium.WebElement;
 public class FileDeletionPage extends BasePage {
     private final By deleteFileElementLocator = By.id("submit-file");
 
-    public FileDeletionPage(WebDriver driver) {
-        super(driver);
-    }
-
     public WebElement getDeleteFileElement() { return driver.findElement(deleteFileElementLocator);}
 }

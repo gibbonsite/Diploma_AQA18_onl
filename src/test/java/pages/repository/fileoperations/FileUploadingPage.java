@@ -10,11 +10,6 @@ public class FileUploadingPage extends BasePage {
     private final By fileElementLocator = By.id("upload-manifest-files-input");
     private final By commitTitleLocator = By.id("commit-summary-input");
 
-
-    public FileUploadingPage(WebDriver driver) {
-        super(driver);
-    }
-
     public WebElement getFileElement() { return driver.findElement(fileElementLocator);}
     public WebElement getCommitChangesElement() { return driver.findElement(commitChangesElementLocator);}
     public WebElement getCommitTitle() { return driver.findElement(commitTitleLocator);}

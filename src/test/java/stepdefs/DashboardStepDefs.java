@@ -1,6 +1,6 @@
 package stepdefs;
 
-import baseentities.BaseCucumberTest;
+import baseentities.BaseCucumberStepDefs;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -9,13 +9,13 @@ import org.openqa.selenium.interactions.Actions;
 import pages.DashboardPage;
 import pages.LoginPage;
 
-public class DashboardStepDefs extends BaseCucumberTest {
+public class DashboardStepDefs extends BaseCucumberStepDefs {
     private DashboardPage dashboardPage;
     private LoginPage loginPage;
 
     @Given("login page is opened")
     public void openLoginPage() {
-        loginPage = new LoginPage(driver);
+        loginPage = new LoginPage();
         loginPage.openPageByUrl("/login");
     }
 
@@ -25,7 +25,7 @@ public class DashboardStepDefs extends BaseCucumberTest {
         loginPage.getPassword().sendKeys(password);
         loginPage.getLogInButton().click();
 
-        dashboardPage = new DashboardPage(driver);
+        dashboardPage = new DashboardPage();
     }
 
 

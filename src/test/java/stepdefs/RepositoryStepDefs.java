@@ -1,6 +1,6 @@
 package stepdefs;
 
-import baseentities.BaseCucumberTest;
+import baseentities.BaseCucumberStepDefs;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -12,18 +12,19 @@ import org.testng.Assert;
 import pages.DashboardPage;
 import pages.UserProfilePage;
 import pages.repository.RepositoryCreationPage;
+import pages.repository.RepositoryDeletionDialogWindow;
 import pages.repository.RepositoryPage;
 import pages.repository.RepositorySettingsPage;
 import pages.repository.fileoperations.FileUploadingPage;
 
 @Log4j2
-public class RepositoryStepDefs extends BaseCucumberTest {
+public class RepositoryStepDefs extends BaseCucumberStepDefs {
 
     private RepositoryCreationPage repositoryCreationPage;
 
     @Given("repository creation page is opened")
     public void openRepositoryPage() {
-        DashboardPage dashboardPage = new DashboardPage(driver);
+        DashboardPage dashboardPage = new DashboardPage();
         dashboardPage.getRepositoryCreationElement().click();
     }
 
@@ -36,7 +37,7 @@ public class RepositoryStepDefs extends BaseCucumberTest {
                 .build();
         log.info("Creating repository " + repository);
 
-        RepositoryCreationPage repositoryCreationPage = new RepositoryCreationPage(driver);
+        RepositoryCreationPage repositoryCreationPage = new RepositoryCreationPage();
         repositoryCreationPage.getRepositoryNameElement().sendKeys(repository.getName());
         repositoryCreationPage.getRepositoryDescriptionElement().sendKeys(repository.getDescription());
         repositoryCreationPage.getPublicOrPrivateRepositoryElement(repository.isPublic()).click();
@@ -46,42 +47,41 @@ public class RepositoryStepDefs extends BaseCucumberTest {
 
     @Then("repository {string} page is opened")
     public void openRepositoryPage(String repository) {
-        RepositoryPage repositoryPage = new RepositoryPage(driver);
+        RepositoryPage repositoryPage = new RepositoryPage();
         Assert.assertEquals(repositoryPage.getRepositoryHeaderElement().getText(),
                 repository);
     }
 
     @Given("user {string} opens repository {string} page")
     public void openRepositoryPage(String username, String repository) {
-        RepositoryPage repositoryPage = new RepositoryPage(driver);
+        RepositoryPage repositoryPage = new RepositoryPage();
         repositoryPage.openPageByUrl("/" + username + "/" + repository);
     }
 
     @And("repository settings page is opened")
     public void openRepositorySettings() {
-        RepositoryPage repositoryPage = new RepositoryPage(driver);
+        RepositoryPage repositoryPage = new RepositoryPage();
         repositoryPage.getRepositorySettingsElement().click();
     }
 
     @When("repository {string} of user {string} is deleted")
     public void deleteRepository(String repository, String username) {
-        RepositorySettingsPage repositorySettingsPage = new RepositorySettingsPage(driver);
+        RepositorySettingsPage repositorySettingsPage = new RepositorySettingsPage();
         repositorySettingsPage.getRepositoryDeletionElement().click();
-        RepositorySettingsPage.RepositoryDeletionPage repositoryDeletionPage =
-                new RepositorySettingsPage.RepositoryDeletionPage(driver);
-        repositoryDeletionPage.getDeletionConfirmationElement().sendKeys(username + "/" + repository);
-        repositoryDeletionPage.getRepositoryDeletionElement().click();
+        RepositoryDeletionDialogWindow repositoryDeletionDialogWindow = new RepositoryDeletionDialogWindow();
+        repositoryDeletionDialogWindow.getDeletionConfirmationElement().sendKeys(username + "/" + repository);
+        repositoryDeletionDialogWindow.getRepositoryDeletionElement().click();
     }
 
     @Then("message about successful repository deletion is shown")
     public void showMessageAboutSuccessfulRepositoryDeletion() {
-        UserProfilePage userProfilePage = new UserProfilePage(driver);
+        UserProfilePage userProfilePage = new UserProfilePage();
         Assert.assertTrue(userProfilePage.getInformationMessageElement().isDisplayed());
     }
 
     @And("file upload page is opened for repository {string} of user {string}")
     public void openFileUploadPage(String repository, String username) {
-        RepositoryPage repositoryPage = new RepositoryPage(driver);
+        RepositoryPage repositoryPage = new RepositoryPage();
         repositoryPage.getAddFileElement().click();
         waitsService.waitForElementVisible(repositoryPage.getUploadFilesMenuItemElement())
                 .click();
@@ -89,7 +89,7 @@ public class RepositoryStepDefs extends BaseCucumberTest {
 
     @When("file is uploaded to a repository")
     public void uploadFileToRepository() {
-        FileUploadingPage fileUploadingPage = new FileUploadingPage(driver);
+        FileUploadingPage fileUploadingPage = new FileUploadingPage();
         String pathToFile = RepositoryStepDefs.class.getClassLoader().getResource("upload.png").getPath()
                 .substring(1);
         fileUploadingPage.getFileElement().sendKeys(pathToFile);
@@ -108,7 +108,7 @@ public class RepositoryStepDefs extends BaseCucumberTest {
                 .build();
         log.info("Attempting to create the repository " + repository);
 
-        repositoryCreationPage = new RepositoryCreationPage(driver);
+        repositoryCreationPage = new RepositoryCreationPage();
         repositoryCreationPage.getRepositoryNameElement().sendKeys(repository.getName());
         repositoryCreationPage.getRepositoryDescriptionElement().sendKeys(repository.getDescription());
         repositoryCreationPage.getPublicOrPrivateRepositoryElement(repository.isPublic()).click();

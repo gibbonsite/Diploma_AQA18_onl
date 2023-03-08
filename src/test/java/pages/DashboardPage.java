@@ -15,10 +15,6 @@ public class DashboardPage extends BasePage {
     private final By userProfileMenuDownArrowElementLocator = By.xpath(
             "//details[contains(@class, 'feature-preview')]/summary");
 
-    public DashboardPage(WebDriver driver) {
-        super(driver);
-    }
-
     public WebElement getUserStatusElement() {
         return driver.findElement(userStatusElementLocator);
     }
@@ -39,44 +35,5 @@ public class DashboardPage extends BasePage {
 
     public WebElement getUserProfileMenuDownArrowElement() {
         return driver.findElement(userProfileMenuDownArrowElementLocator);
-    }
-
-    public static class EditUserStatusDialogWindow extends BasePage {
-        private final By dialogWindowElementLocator = By.xpath(
-                "//*[contains(text(), 'Edit status')]/ancestor::details-dialog");
-        private final By userStatusElementLocator = By.name("message");
-        private final By windowHeaderElementLocator = By.xpath("//*[contains(text(), 'Edit status')]");
-        private final By userIsBusyElementLocator = By.name("limited_availability");
-        private final By setUserStatusElementLocator = By.cssSelector("[type='submit']");
-        private final By clearStatusCheckboxLocator = By.xpath(
-                "//div[contains(text(), 'Clear status')]/following-sibling::*[1]");
-
-        public EditUserStatusDialogWindow(WebDriver driver) {
-            super(driver);
-        }
-
-        public WebElement getUserStatusElement() {
-            return getDialogWindowElement().findElement(userStatusElementLocator);
-        }
-
-        public WebElement getUserIsBusyElement() {
-            return getDialogWindowElement().findElement(userIsBusyElementLocator);
-        }
-
-        public WebElement getWindowHeaderElement() {
-            return getDialogWindowElement().findElement(windowHeaderElementLocator);
-        }
-
-        public WebElement getSetUserStatusElement() {
-            return getDialogWindowElement().findElement(setUserStatusElementLocator);
-        }
-
-        public WebElement getClearStatusCheckboxElement() {
-            return getDialogWindowElement().findElement(clearStatusCheckboxLocator);
-        }
-
-        private WebElement getDialogWindowElement() {
-            return driver.findElement(dialogWindowElementLocator);
-        }
     }
 }

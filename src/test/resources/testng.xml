@@ -3,12 +3,12 @@
 <suite name="Suite" verbose="10" configfailurepolicy="skip">
     <test name="Smoke Test">
         <classes>
-            <class name="RunSmokeCucumberTest" />
+            <class name="runners.SmokeCucumberTest" />
         </classes>
     </test>
     <test name="Regression Test">
         <classes>
-            <class name="RunRegressionCucumberTest"/>
+            <class name="runners.RegressionCucumberTest"/>
         </classes>
     </test>
 </suite>

@@ -1,6 +1,6 @@
-package services;
+package core.services;
 
-import configuration.ReadProperties;
+import core.configuration.ReadProperties;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
@@ -19,7 +19,7 @@ public class WaitsService {
 
     public WaitsService(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(ReadProperties.timeout()));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(ReadProperties.getConfig().timeout()));
     }
 
     public WaitsService(WebDriver driver, Duration timeout) {

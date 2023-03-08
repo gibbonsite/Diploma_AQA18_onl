@@ -10,10 +10,6 @@ public class FileCreationPage extends BasePage {
     private final By commitTitleLocator = By.id("commit-summary-input");
     private final By commitNewFileElementLocator = By.id("submit-file");
 
-    public FileCreationPage(WebDriver driver) {
-        super(driver);
-    }
-
     public WebElement getFileNameElement() { return driver.findElement(fileNameElementLocator);}
     public WebElement getCommitTitle() { return driver.findElement(commitTitleLocator);}
     public WebElement getCommitNewFileElement() { return driver.findElement(commitNewFileElementLocator);}
