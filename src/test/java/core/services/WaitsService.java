@@ -19,7 +19,7 @@ public class WaitsService {
 
     public WaitsService(WebDriver driver) {
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(ReadProperties.getConfig().timeout()));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(ReadProperties.getUiConfig().timeout()));
     }
 
     public WaitsService(WebDriver driver, Duration timeout) {

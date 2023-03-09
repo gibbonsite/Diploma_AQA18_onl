@@ -1,6 +1,6 @@
 Feature: File creation in a repository
 
-  @DefectiveTest
+  @Ui @DefectiveTest
   Scenario Outline: Create file in a repository
     Given login page is opened
     And user with login "<username>" and password "Aqa18OnlDipl#1" is logged in

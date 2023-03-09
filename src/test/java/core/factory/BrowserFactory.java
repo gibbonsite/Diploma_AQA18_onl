@@ -17,13 +17,13 @@ public class BrowserFactory {
     private WebDriver driver;
 
     public BrowserFactory() {
-        switch (ReadProperties.getConfig().browser().toLowerCase()) {
+        switch (ReadProperties.getUiConfig().browser().toLowerCase()) {
             case "chrome":
                 DriverManagerType driverManagerType = DriverManagerType.CHROME;
                 WebDriverManager.getInstance(driverManagerType).setup();
 
                 ChromeOptions chromeOptions = new ChromeOptions();
-                chromeOptions.setHeadless(ReadProperties.getConfig().headless());
+                chromeOptions.setHeadless(ReadProperties.getUiConfig().headless());
                 chromeOptions.addArguments("--disable-gpu");
                 //chromeOptions.addArguments("--window-size=1920,1200");
                 chromeOptions.addArguments("--ignore-certificate-errors");
@@ -40,7 +40,7 @@ public class BrowserFactory {
                 driver = new FirefoxDriver();
                 break;
             default:
-                log.error("Browser " + ReadProperties.getConfig().browser() + " is not supported.");
+                log.error("Browser " + ReadProperties.getUiConfig().browser() + " is not supported.");
                 break;
         }
     }

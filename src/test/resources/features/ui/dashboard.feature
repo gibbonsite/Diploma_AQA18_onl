@@ -1,6 +1,6 @@
 Feature: Dashboard
 
-  @RegressionTest
+  @Ui @RegressionTest
   Scenario Outline: Pop-up window for repository list
     Given login page is opened
     And user with login "DiplomaAqa18Onl" and password "Aqa18OnlDipl#1" is logged in

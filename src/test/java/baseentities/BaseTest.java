@@ -15,7 +15,7 @@ public class BaseTest extends AbstractTestNGCucumberTests {
         String resultsDirectory = Paths.get(System.getProperty("user.dir"),
                 ReadProperties.getAllureConfig().resultsDirectory().replace("/", "\\")) + "\\";
         allureEnvironmentWriter(ImmutableMap.<String, String>builder()
-                .put("Browser", ReadProperties.getConfig().browser())
+                .put("Browser", ReadProperties.getUiConfig().browser())
                 .put("OS", System.getProperty("os.name"))
                 .put("OS.Architecture", System.getProperty("os.arch"))
                 .build(),

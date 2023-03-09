@@ -1,5 +1,6 @@
 package hooks;
 
+import adapters.Specification;
 import baseentities.BaseCucumberStepDefs;
 import core.factory.BrowserFactory;
 import core.services.WaitsService;
@@ -7,9 +8,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import lombok.extern.log4j.Log4j2;
-import model.Repository;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
+import model.ui.Repository;
 import pages.DashboardPage;
 import pages.repository.RepositoryCreationPage;
 import pages.repository.RepositoryDeletionDialogWindow;
@@ -17,19 +16,18 @@ import pages.repository.RepositoryPage;
 import pages.repository.RepositorySettingsPage;
 import pages.repository.fileoperations.FileDeletionPage;
 
-import java.io.ByteArrayInputStream;
-
 import static io.qameta.allure.Allure.addAttachment;
+import static utils.Endpoints.GITHUB;
 
 @Log4j2
 public class CucumberHook extends BaseCucumberStepDefs {
-    @Before
+    @Before("@Ui")
     public void initScenario(Scenario scenario) {
         driver = new BrowserFactory().getDriver();
         waitsService = new WaitsService(driver);
     }
 
-    @After
+    @After("@Ui")
     public void completeScenario(Scenario scenario) {
         if (driver != null) {
             switch (scenario.getName()) {
@@ -68,6 +66,17 @@ public class CucumberHook extends BaseCucumberStepDefs {
 
             driver.quit();
         }
+    }
+
+    @Before("@Api")
+    public void setUp() {
+        System.out.println("Api start");
+        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
+    }
+
+    @After("@Api")
+    public void tearDown() {
+        System.out.println("api end");
     }
 
     private void deleteRepository(String repository) {

@@ -6,7 +6,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.extern.log4j.Log4j2;
-import model.Repository;
+import model.ui.Repository;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.DashboardPage;
