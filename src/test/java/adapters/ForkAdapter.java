@@ -2,11 +2,10 @@ package adapters;
 
 import configurationForApi.ReadProperties;
 import io.restassured.response.Response;
+import models.Fork;
+import org.apache.hc.core5.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
@@ -17,23 +16,19 @@ public class ForkAdapter {
     Logger logger = LogManager.getLogger(ForkAdapter.class);
     Response response;
 
-    public void createFork() {
-        Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
+    public void createFork(Fork fork) {
         logger.info("Creating Fork in GitHub");
-        Map<String, Object> repo = new HashMap<>();
-        repo.put("name", "TestForkAdded");
-
         response = given()
                 .pathParams("owner", ReadProperties.username())
                 .pathParam("repo", "Test_Repo_11231")
                 .when()
                 .log().all()
-                .body(repo)
+                .body(fork)
                 .post(CREATE_A_FORK)
                 .then().log().all().extract().response();
     }
 
     public void checkAddedForkStatus(){
-        assertEquals(response.statusCode(),202);
+        assertEquals(response.statusCode(), HttpStatus.SC_ACCEPTED);
     }
 }

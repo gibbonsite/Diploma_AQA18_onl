@@ -2,32 +2,37 @@ package apiSteps;
 
 import adapters.EmailAdapter;
 
-import baseEntitites.BaseCucumberTest;
 import configurationForApi.DataBaseService;
 import dbTables.EmailDbTable;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import models.Email;
 
-public class StepDefsEmail extends BaseCucumberTest {
+public class StepDefsEmail{
     protected DataBaseService dbService;
     protected EmailDbTable emailDbTable;
     protected EmailAdapter emailAdapter;
-    protected BaseCucumberTest baseCucumberTest;
-    protected Email email;
 
     public StepDefsEmail() {
         this.dbService = new DataBaseService();
         this.emailDbTable = new EmailDbTable(dbService);
         this.emailAdapter = new EmailAdapter();
-        this.baseCucumberTest = new BaseCucumberTest();
     }
+
+    @When("Add information for db email")
+    public void addInformationForDbEmail() {
+        emailDbTable.dropTable();
+        emailDbTable.createEmailTable();
+        Email email = Email.builder()
+                .email("vshchatsko@gmail.com")
+                .id(1).build();
+        emailDbTable.addEmailToDb(email);
+    }
+
     @When("user post email address for github")
     public void userPostEmailAddressForGithub() {
-        emailDbTable.getEmails();
-        emailAdapter.addEmailToGithub();
+        emailAdapter.addEmailToGithub(emailDbTable.getEmails());
     }
 
     @Then("user get response from github about email address is added")
@@ -47,13 +52,7 @@ public class StepDefsEmail extends BaseCucumberTest {
 
     @And("delete added email")
     public void deleteAddedEmail() {
-        emailAdapter.deleteEmail();
-    }
-
-
-    @And("Add information for db email")
-    public void addInformationForDbEmail() {
-        emailDbTable.getEmails();
-
+        emailAdapter.deleteEmail(emailDbTable.getEmails());
+        dbService.closeConnection();
     }
 }

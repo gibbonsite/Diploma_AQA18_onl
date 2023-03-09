@@ -1,14 +1,8 @@
 package apiSteps;
 
 import adapters.GetRequestsAdapters;
-import adapters.Specification;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.apache.hc.core5.http.HttpStatus;
-
-import static io.restassured.RestAssured.given;
-import static org.testng.Assert.assertEquals;
-import static utils.Endpoints.*;
 
 public class StepDefsForGetRequest {
     GetRequestsAdapters getRequestsAdapters = new GetRequestsAdapters();
@@ -62,7 +56,4 @@ public class StepDefsForGetRequest {
     public void theRequesterDataReturnErrorNotFoundError() {
         getRequestsAdapters.theRequesterDataReturnErrorNotFoundError();
     }
-
-
-
 }

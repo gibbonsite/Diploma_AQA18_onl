@@ -16,24 +16,22 @@ public class EmailDbTable {
     public EmailDbTable(DataBaseService dbService) {
         this.dbService = dbService;
     }
-
     public void createEmailTable() {
         String createTableSQL = "Create table email " +
                 "(id SERIAL PRIMARY KEY," +
-                "    email CHARACTER VARYING(255)" +
+                "    email TEXT(255)" +
                 ");";
         dbService.executeSQL(createTableSQL);
         System.out.println("Table create");
     }
     public void addEmailToDb(Email email) {
-        String insertUserSQL = "INSERT INTO " + ReadProperties.database() + ".email (" +
+        String insertEmailSQL = "INSERT INTO " + ReadProperties.database() + ".email (" +
                 "id, email)" +
                 "VALUES ('" + email.getId() + "', '" + email.getEmail() + "');";
-        dbService.executeSQL(insertUserSQL);
+        dbService.executeSQL(insertEmailSQL);
     }
 
     public void dropTable() {
-
         String dropTableSQL = "DROP TABLE if exists " + ReadProperties.database() + ".email";
         System.out.println("Table delete");
         dbService.executeSQL(dropTableSQL);
@@ -53,8 +51,6 @@ public class EmailDbTable {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        dbService.closeConnection();
         return emails.stream().map(Email::getEmail).collect(Collectors.toList());
-
     }
 }

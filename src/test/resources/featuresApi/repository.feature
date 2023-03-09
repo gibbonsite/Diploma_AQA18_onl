@@ -2,7 +2,8 @@
 Feature: Smoke Test
 
   Scenario: Create repository from Github
-    When user post data to github api
+    When user add repository to database
+    And user post data to github api
     Then user check code status
 
   Scenario: User send get request about repository Github

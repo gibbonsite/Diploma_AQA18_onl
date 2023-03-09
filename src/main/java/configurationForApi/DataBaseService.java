@@ -29,6 +29,7 @@ public class DataBaseService {
             connection = DriverManager.getConnection(urlDb, DB_USER, DB_PASSWORD);
             logger.info("DB connected successfully...");
         } catch (SQLException e) {
+            closeConnection();
             logger.info("Something went wrong...");
             throw new RuntimeException(e);
         }
