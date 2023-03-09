@@ -10,6 +10,8 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
 import models.Fork;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class StepDefsForAddFork {
@@ -22,9 +24,11 @@ public class StepDefsForAddFork {
         this.forkDbTable = new ForkDbTable(dbService);
         this.forkAdapter = new ForkAdapter();
     }
+    Logger logger = LogManager.getLogger(StepDefsForAddFork.class);
 
     @When("add information for database forks")
     public void addInformationForDatabaseForks() {
+        logger.info("Create fork table and add to data base");
         forkDbTable.dropTable();
         forkDbTable.createForkTable();
         Fork fork = Fork.builder()

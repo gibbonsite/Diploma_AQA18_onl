@@ -13,6 +13,8 @@ import io.restassured.response.Response;
 
 import models.Repository;
 import org.apache.hc.core5.http.HttpStatus;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.testng.Assert;
 
 
@@ -26,8 +28,11 @@ public class StepDefsRepository{
         this.repositoriesDbTable = new RepositoriesDbTable(dbService);
         this.repositoryAdapter = new RepositoryAdapter();
     }
+    Logger logger = LogManager.getLogger(StepDefsForAddFork.class);
+
     @When("user add repository to database")
     public void userAddRepositoryToDatabase() {
+        logger.info("Create repo table and add to database");
         repositoriesDbTable.dropTable();
         repositoriesDbTable.createRepositoryTable();
         Repository repository = Repository.builder()

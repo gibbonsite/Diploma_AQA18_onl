@@ -8,6 +8,8 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import models.Email;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class StepDefsEmail{
     protected DataBaseService dbService;
@@ -19,9 +21,11 @@ public class StepDefsEmail{
         this.emailDbTable = new EmailDbTable(dbService);
         this.emailAdapter = new EmailAdapter();
     }
+    Logger logger = LogManager.getLogger(StepDefsEmail.class);
 
     @When("Add information for db email")
     public void addInformationForDbEmail() {
+        logger.info("Add email table and add to data base");
         emailDbTable.dropTable();
         emailDbTable.createEmailTable();
         Email email = Email.builder()
