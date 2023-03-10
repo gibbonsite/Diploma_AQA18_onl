@@ -11,7 +11,7 @@ import io.cucumber.java.en.When;
 
 import io.restassured.response.Response;
 
-import model.api.Repository;
+import models.Repository;
 import org.apache.hc.core5.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,6 +28,7 @@ public class RepositoryStepDefs {
         this.repositoriesDbTable = new RepositoriesDbTable(dbService);
         this.repositoryAdapter = new RepositoryAdapter();
     }
+
     Logger logger = LogManager.getLogger(AddForkStepDefs.class);
 
     @When("user add repository to database")
@@ -40,14 +41,16 @@ public class RepositoryStepDefs {
                 .name("New diploma repo")
                 .announcement("New repository")
                 .description("This is repository for testing")
-                .IsPrivate(false)
+                .isPrivate(false)
                 .build();
         repositoriesDbTable.addRepositoryToDb(repository);
     }
+
     @And("user post data to github api")
     public void userPostRepoDataToGithubApi() {
         repositoryAdapter.createRepository(repositoriesDbTable.getRepository(1));
     }
+
     @And("user check code status")
     public void userCheckCodeStatus() {
         repositoryAdapter.checkCreatedStatus();
@@ -57,6 +60,7 @@ public class RepositoryStepDefs {
     public void userGetRepoDataToGithubApi() {
         repositoryAdapter.getRepo();
     }
+
     @Then("user get response from github about created repository")
     public void userGetRequestFromGithubAboutCreatedRepository() {
         repositoryAdapter.checkGetStatus();

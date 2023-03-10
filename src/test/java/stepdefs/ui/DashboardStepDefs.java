@@ -1,6 +1,7 @@
-package stepdefs;
+package stepdefs.ui;
 
 import baseentities.BaseCucumberStepDefs;
+import core.configuration.ReadProperties;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -19,10 +20,10 @@ public class DashboardStepDefs extends BaseCucumberStepDefs {
         loginPage.openPageByUrl("/login");
     }
 
-    @And("user with login {string} and password {string} is logged in")
-    public void logInUserWithUsernameAndPassword(String username, String password) {
-        loginPage.getUserNameInput().sendKeys(username);
-        loginPage.getPassword().sendKeys(password);
+    @And("user with his login and password is logged in")
+    public void logInUserWithUsernameAndPassword() {
+        loginPage.getUserNameInput().sendKeys(ReadProperties.getAuthenticationConfig().gitHubUsername());
+        loginPage.getPassword().sendKeys(ReadProperties.getAuthenticationConfig().gitHubPassword());
         loginPage.getLogInButton().click();
 
         dashboardPage = new DashboardPage();
@@ -37,8 +38,8 @@ public class DashboardStepDefs extends BaseCucumberStepDefs {
                 .perform();
     }
 
-    @Then("pop-up window with repository {string} brief info appears")
-    public void showUpPopupWindow(String repository) {
+    @Then("pop-up window with repository brief info appears")
+    public void showUpPopupWindow() {
         waitsService.waitForElementVisible(dashboardPage.getPopupWindowElement());
     }
 }

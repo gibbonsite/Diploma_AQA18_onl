@@ -8,7 +8,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import lombok.extern.log4j.Log4j2;
-import model.ui.Repository;
+import models.Repository;
 import pages.DashboardPage;
 import pages.repository.RepositoryCreationPage;
 import pages.repository.RepositoryDeletionDialogWindow;
@@ -22,13 +22,13 @@ import static utils.Endpoints.GITHUB;
 @Log4j2
 public class CucumberHook extends BaseCucumberStepDefs {
     @Before("@Ui")
-    public void initScenario(Scenario scenario) {
+    public void initUiScenario() {
         driver = new BrowserFactory().getDriver();
         waitsService = new WaitsService(driver);
     }
 
     @After("@Ui")
-    public void completeScenario(Scenario scenario) {
+    public void completeUiScenario(Scenario scenario) {
         if (driver != null) {
             switch (scenario.getName()) {
                 case "Repository creation":
@@ -46,14 +46,14 @@ public class CucumberHook extends BaseCucumberStepDefs {
                     Repository repository = Repository.builder()
                             .name("RepositoryDeletion01")
                             .description("Repository for running tests of Diploma AQA18-onl.")
-                            .isPublic(true)
+                            .isPrivate(false)
                             .build();
                     log.info("Recreating repository " + repository);
 
                     RepositoryCreationPage repositoryCreationPage = new RepositoryCreationPage();
                     repositoryCreationPage.getRepositoryNameElement().sendKeys(repository.getName());
                     repositoryCreationPage.getRepositoryDescriptionElement().sendKeys(repository.getDescription());
-                    repositoryCreationPage.getPublicOrPrivateRepositoryElement(repository.isPublic()).click();
+                    repositoryCreationPage.getPublicOrPrivateRepositoryElement(!repository.isPrivate()).click();
                     waitsService.waitForElementIsEnabled(repositoryCreationPage.getCreateRepositoryElement())
                             .click();
                     break;
@@ -69,14 +69,14 @@ public class CucumberHook extends BaseCucumberStepDefs {
     }
 
     @Before("@Api")
-    public void setUp() {
-        System.out.println("Api start");
+    public void setUpApi() {
+        log.info("Api scenario started");
         Specification.installRequestSpecification(Specification.requestSpecification(GITHUB));
     }
 
     @After("@Api")
-    public void tearDown() {
-        System.out.println("api end");
+    public void tearDownApi() {
+        log.info("Api scenario finished");
     }
 
     private void deleteRepository(String repository) {

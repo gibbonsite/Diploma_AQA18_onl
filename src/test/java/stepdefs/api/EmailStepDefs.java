@@ -7,7 +7,7 @@ import dbtables.EmailDbTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import model.api.Email;
+import models.Email;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,6 +21,7 @@ public class EmailStepDefs {
         this.emailDbTable = new EmailDbTable(dbService);
         this.emailAdapter = new EmailAdapter();
     }
+
     Logger logger = LogManager.getLogger(EmailStepDefs.class);
 
     @When("Add information for db email")

@@ -8,7 +8,7 @@ import dbtables.ForkDbTable;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import model.api.Fork;
+import models.Fork;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,6 +23,7 @@ public class AddForkStepDefs {
         this.forkDbTable = new ForkDbTable(dbService);
         this.forkAdapter = new ForkAdapter();
     }
+
     Logger logger = LogManager.getLogger(AddForkStepDefs.class);
 
     @When("add information for database forks")

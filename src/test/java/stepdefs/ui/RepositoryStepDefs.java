@@ -1,12 +1,13 @@
-package stepdefs;
+package stepdefs.ui;
 
 import baseentities.BaseCucumberStepDefs;
+import core.configuration.ReadProperties;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.extern.log4j.Log4j2;
-import model.ui.Repository;
+import models.Repository;
 import org.openqa.selenium.By;
 import org.testng.Assert;
 import pages.DashboardPage;
@@ -33,29 +34,30 @@ public class RepositoryStepDefs extends BaseCucumberStepDefs {
         Repository repository = Repository.builder()
                 .name(repositoryName)
                 .description("Repository for running tests of Diploma AQA18-onl.")
-                .isPublic(true)
+                .isPrivate(false)
                 .build();
         log.info("Creating repository " + repository);
 
         RepositoryCreationPage repositoryCreationPage = new RepositoryCreationPage();
         repositoryCreationPage.getRepositoryNameElement().sendKeys(repository.getName());
         repositoryCreationPage.getRepositoryDescriptionElement().sendKeys(repository.getDescription());
-        repositoryCreationPage.getPublicOrPrivateRepositoryElement(repository.isPublic()).click();
+        repositoryCreationPage.getPublicOrPrivateRepositoryElement(!repository.isPrivate()).click();
         waitsService.waitForElementIsEnabled(repositoryCreationPage.getCreateRepositoryElement())
                 .click();
     }
 
     @Then("repository {string} page is opened")
-    public void openRepositoryPage(String repository) {
+    public void repositoryPageIsOpened(String repository) {
         RepositoryPage repositoryPage = new RepositoryPage();
         Assert.assertEquals(repositoryPage.getRepositoryHeaderElement().getText(),
                 repository);
     }
 
-    @Given("user {string} opens repository {string} page")
-    public void openRepositoryPage(String username, String repository) {
+    @Given("user opens repository {string} page")
+    public void openRepositoryPage(String repository) {
         RepositoryPage repositoryPage = new RepositoryPage();
-        repositoryPage.openPageByUrl("/" + username + "/" + repository);
+        repositoryPage.openPageByUrl("/" + ReadProperties.getAuthenticationConfig().gitHubUsername() +
+                "/" + repository);
     }
 
     @And("repository settings page is opened")
@@ -64,12 +66,13 @@ public class RepositoryStepDefs extends BaseCucumberStepDefs {
         repositoryPage.getRepositorySettingsElement().click();
     }
 
-    @When("repository {string} of user {string} is deleted")
-    public void deleteRepository(String repository, String username) {
+    @When("repository {string} is deleted")
+    public void deleteRepository(String repository) {
         RepositorySettingsPage repositorySettingsPage = new RepositorySettingsPage();
         repositorySettingsPage.getRepositoryDeletionElement().click();
         RepositoryDeletionDialogWindow repositoryDeletionDialogWindow = new RepositoryDeletionDialogWindow();
-        repositoryDeletionDialogWindow.getDeletionConfirmationElement().sendKeys(username + "/" + repository);
+        repositoryDeletionDialogWindow.getDeletionConfirmationElement().sendKeys(
+                ReadProperties.getAuthenticationConfig().gitHubUsername() + "/" + repository);
         repositoryDeletionDialogWindow.getRepositoryDeletionElement().click();
     }
 
@@ -79,8 +82,8 @@ public class RepositoryStepDefs extends BaseCucumberStepDefs {
         Assert.assertTrue(userProfilePage.getInformationMessageElement().isDisplayed());
     }
 
-    @And("file upload page is opened for repository {string} of user {string}")
-    public void openFileUploadPage(String repository, String username) {
+    @And("file upload page is opened")
+    public void openFileUploadPage() {
         RepositoryPage repositoryPage = new RepositoryPage();
         repositoryPage.getAddFileElement().click();
         waitsService.waitForElementVisible(repositoryPage.getUploadFilesMenuItemElement())
@@ -104,14 +107,14 @@ public class RepositoryStepDefs extends BaseCucumberStepDefs {
         Repository repository = Repository.builder()
                 .name("RepositoryLong01")
                 .description("Repository has an extremely long description length. " + "1".repeat(    350))
-                .isPublic(true)
+                .isPrivate(false)
                 .build();
         log.info("Attempting to create the repository " + repository);
 
         repositoryCreationPage = new RepositoryCreationPage();
         repositoryCreationPage.getRepositoryNameElement().sendKeys(repository.getName());
         repositoryCreationPage.getRepositoryDescriptionElement().sendKeys(repository.getDescription());
-        repositoryCreationPage.getPublicOrPrivateRepositoryElement(repository.isPublic()).click();
+        repositoryCreationPage.getPublicOrPrivateRepositoryElement(!repository.isPrivate()).click();
         waitsService.waitForElementIsEnabled(repositoryCreationPage.getCreateRepositoryElement())
                 .click();
     }

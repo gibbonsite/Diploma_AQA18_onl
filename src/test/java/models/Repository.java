@@ -1,4 +1,4 @@
-package model.api;
+package models;
 
 
 import com.google.gson.annotations.SerializedName;
@@ -14,5 +14,5 @@ public class Repository {
     private String announcement;
     private String description;
     @SerializedName(value = "private")
-    private boolean IsPrivate;
+    private boolean isPrivate;
 }

@@ -1,21 +1,15 @@
 package core.services;
 
+import core.configuration.ReadProperties;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 
+@Log4j2
 public class DataBaseService {
-
-    static final String DB_TYPE = "mysql";
-    static final String DB_HOST = "sql7.freesqldatabase.com";
-    static final String DB_PORT = "3306";
-    static final String DB_NAME = "sql7603069";
-    static final String DB_USER = "sql7603069";
-    static final String DB_PASSWORD = "RH4TJEqpvX";
     Connection connection;
-
-    Logger logger = LogManager.getLogger(DataBaseService.class);
 
     public DataBaseService() {
         try {
@@ -24,13 +18,16 @@ public class DataBaseService {
             throw new RuntimeException(e);
         }
 
-        String urlDb = String.format("jdbc:%1$s://%2$s:%3$s/%4$s", DB_TYPE, DB_HOST,DB_PORT, DB_NAME);
+        String urlDb = String.format("jdbc:%1$s://%2$s:%3$s/%4$s", ReadProperties.getApiConfig().dbType(),
+                ReadProperties.getApiConfig().dbHost(), ReadProperties.getApiConfig().dbPort(),
+                ReadProperties.getApiConfig().dbName());
         try {
-            connection = DriverManager.getConnection(urlDb, DB_USER, DB_PASSWORD);
-            logger.info("DB connected successfully...");
+            connection = DriverManager.getConnection(urlDb, ReadProperties.getAuthenticationConfig().dbUsername(),
+                    ReadProperties.getAuthenticationConfig().dbPassword());
+            log.info("DB connected successfully...");
         } catch (SQLException e) {
             closeConnection();
-            logger.info("Something went wrong...");
+            log.error("Something went wrong while connecting to DB...");
             throw new RuntimeException(e);
         }
     }
@@ -42,6 +39,7 @@ public class DataBaseService {
             throw new RuntimeException(e);
         }
     }
+
     public void executeSQL(String sql) {
         try {
             getStatement().execute(sql);
@@ -51,12 +49,12 @@ public class DataBaseService {
     }
 
     public void closeConnection() {
-        if(connection != null){
+        if (connection != null) {
             try {
                 connection.close();
-                System.out.println("Connection is closed");
+                log.info("Connection is closed");
             } catch (SQLException e) {
-                System.out.println("Something went wrong...");
+                log.error("Something went wrong while closing connection to DB...");
                 throw new RuntimeException(e);
             }
         }
