@@ -2,7 +2,7 @@ Feature: Code repository
 
   Background:
     Given login page is opened
-    And user with login "DiplomaAqa18Onl" and password "Aqa18OnlDipl#1" is logged in
+    And user with his login and password is logged in
 
   @Ui @SmokeTest
   Scenario Outline: Repository creation
@@ -15,13 +15,13 @@ Feature: Code repository
 
   @Ui @RegressionTest
   Scenario Outline: Repository deletion
-    Given user "<username>" opens repository "<repository>" page
+    Given user opens repository "<repository>" page
     And repository settings page is opened
-    When repository "<repository>" of user "<username>" is deleted
+    When repository "<repository>" is deleted
     Then message about successful repository deletion is shown
     Examples:
-      | username        | repository           |
-      | DiplomaAqa18Onl | RepositoryDeletion01 |
+      | repository           |
+      | RepositoryDeletion01 |
 
   @Ui @RegressionTest
   Scenario Outline: Boundary test for repository creation
@@ -35,13 +35,13 @@ Feature: Code repository
 
   @Ui @SmokeTest
   Scenario Outline: Uploading file to repository
-    Given user "<username>" opens repository "<repository>" page
-    And file upload page is opened for repository "<repository>" of user "<username>"
+    Given user opens repository "<repository>" page
+    And file upload page is opened
     When file is uploaded to a repository
     Then repository "<repository>" page is opened
     Examples:
-      | username        | repository      |
-      | DiplomaAqa18Onl | FirstRepository |
+      | repository      |
+      | FirstRepository |
 
   @Ui @RegressionTest
   Scenario: Create repository with extremely long description

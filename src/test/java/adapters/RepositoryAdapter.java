@@ -2,7 +2,7 @@ package adapters;
 
 import core.configuration.ReadProperties;
 import io.restassured.response.Response;
-import model.api.Repository;
+import models.Repository;
 import org.apache.hc.core5.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -36,7 +36,7 @@ public class RepositoryAdapter {
     public void getRepo() {
         logger.info("Get Repository in GitHub");
         response = given()
-                .pathParams("owner", ReadProperties.getApiConfig().username())
+                .pathParams("owner", ReadProperties.getAuthenticationConfig().gitHubUsername())
                 .pathParam("repo", "New-diploma-repo")
                 .when()
                 .get(GET_REPO)
@@ -53,7 +53,7 @@ public class RepositoryAdapter {
     public Response deleteRepo() {
         logger.info("Delete Repository in GitHub");
         return given()
-                .pathParam("owner", ReadProperties.getApiConfig().username())
+                .pathParam("owner", ReadProperties.getAuthenticationConfig().gitHubUsername())
                 .pathParam("repo", "New-diploma-repo")
                 .when()
                 .delete(DELETE_REPO)

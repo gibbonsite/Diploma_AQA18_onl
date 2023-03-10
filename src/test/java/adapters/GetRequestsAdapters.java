@@ -19,7 +19,7 @@ public class GetRequestsAdapters {
     public void authorizationUserWantToGetInformationFromGithub() {
         logger.info("Get user info in GitHub");
         response = given()
-                .get((USER_URL + "/" + ReadProperties.getApiConfig().username()))
+                .get((USER_URL + "/" + ReadProperties.getAuthenticationConfig().gitHubUsername()))
                 .then()
                 .log().body()
                 .extract().response();
@@ -36,6 +36,7 @@ public class GetRequestsAdapters {
                 .then()
                 .log().body().extract().response();
     }
+
     public void theRequestedDataAllUserIsReturned() {
         Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
     }
@@ -47,6 +48,7 @@ public class GetRequestsAdapters {
                 .then()
                 .log().body().extract().response();
     }
+
     public void theRequestedDataOfEmojisIsReturned() {
         Assert.assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
     }
@@ -71,7 +73,7 @@ public class GetRequestsAdapters {
 
     public void authorizationUserWantToGetInformationFromGithubWithWrongEndpoint() {
         logger.info("Get repo info with wrong url");
-        response =  given()
+        response = given()
                 .get("//repo")
                 .then()
                 .log().body().extract().response();

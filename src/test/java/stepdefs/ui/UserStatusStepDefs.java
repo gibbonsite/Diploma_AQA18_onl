@@ -1,4 +1,4 @@
-package stepdefs;
+package stepdefs.ui;
 
 import baseentities.BaseCucumberStepDefs;
 import io.cucumber.java.en.Then;

@@ -1,4 +1,4 @@
-package model.api;
+package models;
 
 import lombok.*;
 
@@ -7,5 +7,4 @@ import lombok.*;
 public class Fork {
     private int id;
     private String name;
-
 }

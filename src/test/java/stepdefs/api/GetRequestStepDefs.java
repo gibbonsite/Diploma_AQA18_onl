@@ -23,6 +23,7 @@ public class GetRequestStepDefs {
         getRequestsAdapters.authorizationUserWantToGetAllInformationFromGithub();
 
     }
+
     @Then("the requested data info of all user is returned")
     public void theRequestedDataInfoOfAllUserIsReturned() {
         getRequestsAdapters.theRequestedDataAllUserIsReturned();
@@ -32,6 +33,7 @@ public class GetRequestStepDefs {
     public void authorizationUserWantToGetEmojisInformationFromGithub() {
         getRequestsAdapters.authorizationUserWantToGetEmojisInformationFromGithub();
     }
+
     @Then("the requested data emojis is returned")
     public void theRequestedDataEmojisIsReturned() {
         getRequestsAdapters.theRequestedDataOfEmojisIsReturned();

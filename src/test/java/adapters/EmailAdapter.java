@@ -2,7 +2,7 @@ package adapters;
 
 
 import io.restassured.response.Response;
-import model.api.Email;
+import models.Email;
 import org.apache.hc.core5.http.HttpStatus;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,9 +13,10 @@ import static io.restassured.RestAssured.given;
 import static org.testng.Assert.assertEquals;
 import static utils.Endpoints.*;
 
-public class EmailAdapter{
+public class EmailAdapter {
     Logger logger = LogManager.getLogger(EmailAdapter.class);
     Response response;
+
     public void addEmailToGithub(List<Email> body) {
         logger.info("Add email in GitHub");
 
@@ -42,7 +43,10 @@ public class EmailAdapter{
                 .extract()
                 .response();
     }
-    public void responseGetStatusEmail(){assertEquals(response.getStatusCode(), HttpStatus.SC_OK);}
+
+    public void responseGetStatusEmail() {
+        assertEquals(response.getStatusCode(), HttpStatus.SC_OK);
+    }
 
     public void deleteEmail(List<Email> body) {
 
